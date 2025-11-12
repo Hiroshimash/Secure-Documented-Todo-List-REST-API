@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy==2.0.18
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+PyMySQL
+alembic
+python-dotenv

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Todos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h2 { color: #333; }
+
+    form {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 620px;
+    }
+
+    input, textarea {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover { background: #0056b3; }
+
+    table {
+      background: white;
+      border-collapse: collapse;
+      width: 620px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    a.delete {
+      color: red;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.delete:hover {
+      text-decoration: underline;
+    }
+
+    a.logout {
+      margin-top: 20px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a.logout:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome, {{ user.name }}</h2>
+
+  <!-- Add Todo Form -->
+  <form method="post" action="/todos/add/">
+    <input type="text" name="title" placeholder="Todo title" required />
+    <textarea name="description" placeholder="Description (optional)"></textarea>
+    <button type="submit">Add Todo</button>
+  </form>
+
+  <!-- Todo Table -->
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    {% for todo in todos %}
+    <tr>
+      <td>
+        <form method="post" action="/todos/update/{{ todo.id }}/">
+          <input type="text" name="title" value="{{ todo.title }}" required />
+      </td>
+      <td>
+          <textarea name="description">{{ todo.description }}</textarea>
+      </td>
+      <td>
+          <button type="submit">Update</button>
+          <a href="/todos/delete/{{ todo.id }}/" class="delete">Delete</a>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href="/logout" class="logout">Logout</a>
+</body>
+</html>
